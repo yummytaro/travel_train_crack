@@ -10,7 +10,6 @@ def read_train():
     df = pd.read_csv(FILE_TRAIN)
     stations = df['STATION'].unique()
 
-
     for sta in stations:
         _df = df[df['STATION'] == sta].sort_values(by="ARRIVETIME")
         sta_list[sta] = _df
@@ -51,6 +50,5 @@ print(card.size)
 #card = card.loc[1:10000,]
 card['LIST'] = card.apply(check_enter_time,axis=1)
 card.to_csv(FILE_SAVE,index =False)
-
 
 
