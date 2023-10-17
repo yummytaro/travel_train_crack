@@ -38,18 +38,26 @@ def check_enter_time(card):
     des_sta = card['DESTINATION_STATION']
     ori_tim = card['ENTRY_TIME']
     des_tim = card['DEAL_TIME']
-    ori_tim = (ori_tim + dt.timedelta(seconds=-30)).time()
-    des_tim = (des_tim + dt.timedelta(seconds=30)).time()
-    ori_list = train_statis_time(ori_sta, ori_tim, des_tim)
-    des_list = train_statis_time(des_sta, ori_tim, des_tim)
+
+    pre = False
+    ori_list = train_statis_time(ori_sta, ori_tim.time(), des_tim.time())
+    des_list = train_statis_time(des_sta, ori_tim.time(), des_tim.time())
     list_train = np.intersect1d(des_list, ori_list).tolist()
+    if len(list_train) == 0:
+        ori_tim = (ori_tim + dt.timedelta(seconds=-30)).time()
+        des_tim = (des_tim + dt.timedelta(seconds=30)).time()
+        ori_list = train_statis_time(ori_sta, ori_tim, des_tim)
+        des_list = train_statis_time(des_sta, ori_tim, des_tim)
+        list_train = np.intersect1d(des_list, ori_list).tolist()
+        if len(list_train) != 0:
+            pre = True
     if card.name % 100 == 0:
         print(str(card.name) + " finished")
-    return {"list":list_train}
+    return {"list": list_train, "pressure": pre}
 
 
 read_train()
 card = read_card()
-#card = card.loc[1:1000, ]
-card['LIST'] = card.apply(check_enter_time, axis=1)
+card = card.loc[1:1000, ]
+card['LIST']= card.apply(check_enter_time, axis=1)
 card.to_csv(FILE_SAVE, index=False)
