@@ -13,7 +13,7 @@ def read_dataframe(src):
     df['TRAVEL_MINUTE'] = df['TRAVEL'] / pd.Timedelta(minutes=1)
     df['DIRTY'] = 'CLEAN'
     df['DIRTY'] = df.apply(lambda x: x['DIRTY'] if x['ENTRY_TIME'] < x['DEAL_TIME'] else 'WRONG ENTER TIME', axis=1)
-    df['DIRTY'] = df.apply(lambda x: x['DIRTY'] if x['ORIGIN_STATION'] != x['DESTINATION_STATION'] else 'SAME STATION',
+    df['DIRTY'] = df.apply(lambda x: x['DIRTY'] if x['ORIGIN_STATION'] < x['DESTINATION_STATION'] else 'WRONG STATION',
                            axis=1)
     df['DIRTY'] = df.apply(lambda x: x['DIRTY'] if x['TRAVEL_MINUTE'] < 100 else 'TO LONG TRAVEL TIME',
                            axis=1)

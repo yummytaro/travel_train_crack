@@ -51,7 +51,7 @@ def check_enter_time(card):
         list_train = np.intersect1d(des_list, ori_list).tolist()
         if len(list_train) != 0:
             pre = True
-    if card.name % 100 == 0:
+    if card.name % 1000 == 0:
         print(str(card.name) + " finished")
     return {"list": list_train, "pressure": pre}
 
