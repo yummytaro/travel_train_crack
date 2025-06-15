@@ -24,7 +24,8 @@ def read_dataframe(src):
     return df_clean, df_dirty
 
 
-df, df_dirty = read_dataframe(FILE)
+# df, df_dirty = read_dataframe(FILE)
+#
+# df_dirty.to_csv(FILE_DIRTY_ARRIVE, index=False)
+# df.to_csv(FILE_CARD_CLEAN, index=False)
 
-df_dirty.to_csv(FILE_DIRTY_ARRIVE, index=False)
-df.to_csv(FILE_CARD_CLEAN, index=False)
